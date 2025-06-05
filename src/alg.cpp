@@ -1,9 +1,12 @@
 // Copyright 2022 NNTU-CS
+#include "tree.h"
 #include <algorithm>
+#include <cmath>
 #include <memory>
 #include <vector>
+#include <cmath>
 
-#include "tree.h"
+PMTree::PMTree(const std::vector<char>& elements) { create(elements); }
 
 void PMTree::create_tree(std::shared_ptr<Node>& parent,
                          const std::vector<char>& remain) {
@@ -93,8 +96,6 @@ std::vector<char> getPerm1(const PMTree& tree, int num) {
   return all_perms[num - 1];
 }
 
-#include <cmath>
-
 static int factorial(int n) {
   int res = 1;
   for (int i = 2; i <= n; ++i) res *= i;
@@ -118,7 +119,7 @@ std::vector<char> getPerm2Helper(const std::shared_ptr<PMTree::Node>& node,
   std::vector<char> remaining_elements_in_node(elements_in_node);
 
   for (size_t i = 0; i < n_children; ++i) {
-    int block_size = factorial(total_levels - level - 1);
+    int block_size = factorial(static_cast<int>(total_levels - level - 1));
 
     int index_in_children = remaining / block_size;
 
