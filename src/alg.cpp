@@ -111,7 +111,10 @@ std::vector<char> getPerm2Helper(const std::shared_ptr<PMTree::Node>& node,
                                  const std::vector<char>& elements_in_node,
                                  const size_t level, const size_t total_levels,
                                  const size_t& total_elements) {
-  if (!node) return {};
+  if (!node) {
+    std::cerr << "getPerm2Helper: node is nullptr at level " << level << "\n";
+    return {};
+  }
 
   if (node->children.empty()) {
     --remaining;
@@ -122,57 +125,49 @@ std::vector<char> getPerm2Helper(const std::shared_ptr<PMTree::Node>& node,
   }
 
   size_t n_children = node->children.size();
-  std::vector<char> remaining_elements_in_node(elements_in_node);
 
-  for (size_t i = 0; i < n_children; ++i) {
-    int block_size = factorial(static_cast<int>(total_levels - level - 1));
-    int index_in_children = remaining / block_size;
-    if (index_in_children >= static_cast<int>(n_children)) {
-      return {};
-    }
-    remaining %= block_size;
+  std::cerr << "Level " << level << ", remaining = " << remaining
+            << ", children = " << n_children << "\n";
 
-    auto child_ptr = node->children[index_in_children];
-    if (!child_ptr) {
-      return {};
-    }
+  int block_size = factorial(static_cast<int>(total_levels - level - 1));
+  int index_in_children = remaining / block_size;
 
-    auto result =
-        getPerm2Helper(child_ptr, remaining, remaining_elements_in_node,
-                       level + 1, total_levels, total_elements);
+  if (index_in_children >= static_cast<int>(n_children)) {
+    std::cerr << "Index out of range: " << index_in_children
+              << " >= " << n_children << "\n";
+    return {};
+  }
 
-    if (!result.empty()) {
-      if (node->value != '\0') result.insert(result.begin(), node->value);
-      return result;
-    }
+  remaining %= block_size;
+
+  auto child_ptr = node->children[index_in_children];
+  if (!child_ptr) {
+    std::cerr << "Child pointer is nullptr at index " << index_in_children
+              << ", level " << level << "\n";
+    return {};
+  }
+
+  auto result = getPerm2Helper(child_ptr, remaining, elements_in_node,
+                               level + 1, total_levels, total_elements);
+
+  if (!result.empty()) {
+    if (node->value != '\0') result.insert(result.begin(), node->value);
+    return result;
   }
 
   return {};
 }
 
 std::vector<char> getPerm2(const PMTree& tree, int num) {
-  int total_perm = tree.getTotalPermutations();
-  if (num < 1 || num > total_perm) return {};
-
   auto root = tree.getRoot();
   if (!root) return {};
 
-  size_t n = root->children.size();
-
+  int remaining = num - 1;
+  size_t total_levels =
+      root->children.empty() ? 0 : root->children.front()->children.size() + 1;
   std::vector<char> elements_in_node;
 
-  for (const auto& ch : root->children) {
-    if (ch) {
-      elements_in_node.push_back(ch->value);
-    }
-  }
-
-  int remaining = num - 1;
-
-  auto perm_result =
-      getPerm2Helper(root, remaining, elements_in_node, 0,
-                     static_cast<size_t>(elements_in_node.size()),
-                     static_cast<size_t>(elements_in_node.size()));
-
-  return perm_result;
+  auto result =
+      getPerm2Helper(root, remaining, elements_in_node, 0, total_levels, 0);
+  return result;
 }
