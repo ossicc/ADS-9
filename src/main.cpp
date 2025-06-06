@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <vector>
 
 #include "tree.h"
 
@@ -90,10 +91,15 @@ void runExperiment() {
     data_file << n << "," << time_all_perm << "," << (time_perm1 / test_cases)
               << "," << (time_perm2 / test_cases) << "\n";
 
-  std ::cout<<"n="<<n<<" завершено."<<std ::endl;
+  std ::cout << "n=" << n << " завершено." << std ::endl;
   }
 }
 
+int main() {
+  printExample();
+  runExperiment();
+  return 0;
+}
 int main() {
   printExample();
   runExperiment();
