@@ -100,8 +100,3 @@ int main() {
   runExperiment();
   return 0;
 }
-int main() {
-  printExample();
-  runExperiment();
-  return 0;
-}
