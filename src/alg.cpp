@@ -42,9 +42,9 @@ size_t PMTree::getTotalPermutations() const {
 
 std::vector<char> PMTree::getElements() const { return elements; }
 
-void collectPermutations(const std::_shared_ptr<Node>& node,
-                         std::_string& current,
-                         std::_vector<std::_string>& result) {
+void collectPermutations(const std::shared_ptr<Node>& node,
+                         std::string& current,
+                         std::vector<std::string>& result) {
   if (!node) return;
 
   current.push_back(node->value);
