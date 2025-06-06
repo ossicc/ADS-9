@@ -31,7 +31,9 @@ void printExample() {
 
   std::cout << "\nПолучение перестановок по индексу:\n";
 
-  for (int i = 1; i <= 6; ++i) {
+  int totalPerms = tree.getTotalPermutations();
+
+  for (int i = 1; i <= totalPerms; ++i) {
     auto p1 = getPerm1(tree, i);
     auto p2 = getPerm2(tree, i);
 
@@ -58,6 +60,8 @@ void runExperiment() {
     PMTree tree(elements);
 
     size_t total_perms = tree.getTotalPermutations();
+
+    if (total_perms == 0) continue;  // на случай пустого набора
 
     std::uniform_int_distribution<> distr(1, total_perms);
 
@@ -87,8 +91,8 @@ void runExperiment() {
       time_perm2 += std::chrono::duration<double>(end - start).count();
     }
 
-    data_file << n << "," << time_all_perm << "," << time_perm1 / test_cases
-              << "," << time_perm2 / test_cases << "\n";
+    data_file << n << "," << time_all_perm << "," << (time_perm1 / test_cases)
+              << "," << (time_perm2 / test_cases) << "\n";
 
     std ::cout << "n=" << n << " completed." << std ::endl;
   }
@@ -97,8 +101,6 @@ void runExperiment() {
 
 int main() {
   printExample();
-
   runExperiment();
-
   return 0;
 }
