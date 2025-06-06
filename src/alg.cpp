@@ -7,10 +7,12 @@
 
 #include "tree.h"
 
-
-PMTree::PMTree(const std::vector<char>& elements) { create(elements); }
+PMTree::PMTree(const std::vector<char>& elements) : elements(elements) {
+  create(elements);
+}
 
 void PMTree::create(const std::vector<char>& data) {
+  this->elements = data;
   root = std::make_shared<Node>('\0');
   create_tree(root, data);
 }
@@ -76,16 +78,20 @@ std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
 
 std::vector<char> getPerm1(const PMTree& tree, int num) {
   auto perms = getAllPerms(tree);
+
   if (num > 0 && num <= static_cast<int>(perms.size())) {
     return perms[num - 1];
   }
+
   return {};
 }
 
 std::vector<char> getPerm2(const PMTree& tree, int num) {
   auto perms = getAllPerms(tree);
+
   if (num > 0 && num <= static_cast<int>(perms.size())) {
     return perms[num - 1];
   }
+
   return {};
 }
