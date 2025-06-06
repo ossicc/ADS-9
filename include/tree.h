@@ -1,6 +1,6 @@
 // Copyright 2022 NNTU-CS
-#ifndef TREE_H
-#define TREE_H
+#ifndef INCLUDE_TREE_H_
+#define INCLUDE_TREE_H_
 
 #include <memory>
 #include <vector>
@@ -33,4 +33,4 @@ std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
 std::vector<char> getPerm1(const PMTree& tree, int num);
 std::vector<char> getPerm2(const PMTree& tree, int num);
 
-#endif  // TREE_H
+#endif  // INCLUDE_TREE_H_
