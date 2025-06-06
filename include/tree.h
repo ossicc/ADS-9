@@ -1,5 +1,4 @@
 // Copyright 2022 NNTU-CS
-#pragma once
 #ifndef TREE_H
 #define TREE_H
 
@@ -11,12 +10,12 @@ class Node {
   char value;
   std::vector<std::shared_ptr<Node>> children;
 
-  Node(char val) : value(val) {}
+  explicit Node(char val) : value(val) {}
 };
 
 class PMTree {
  public:
-  PMTree(const std::vector<char>& elements);
+  explicit PMTree(const std::vector<char>& elements);
   void create(const std::vector<char>& elements);
   std::shared_ptr<Node> getRoot() const { return root; }
 
