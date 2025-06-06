@@ -1,8 +1,9 @@
 // Copyright 2022 NNTU-CS
-#include <memory>
-#include <vector>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include "tree.h"
 
@@ -30,35 +31,6 @@ void PMTree::create_tree(std::shared_ptr<Node>& parent,
   }
 }
 
-std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
-  std::vector<std::vector<char>> result;
-  if (!tree.getRoot()) return result;
-
-}
-
-std::vector<char> getPerm1(const PMTree& tree, int num) {
-}
-
-std::vector<char> getPerm2(const PMTree& tree, int num) {
-}
-
-void collectPermutations(const std::shared_ptr<Node>& node,
-                         std::string& current,
-                         std::vector<std::string>& result) {
-  if (!node) return;
-
-  current.push_back(node->value);
-
-  if (node->children.empty()) {
-    result.push_back(current);
-  } else {
-    for (const auto& child : node->children) {
-      collectPermutations(child, current, result);
-    }
-  }
-
-  current.pop_back();
-}
 size_t PMTree::getTotalPermutations() const {
   auto elems = getElements();
   size_t n = elems.size();
@@ -99,18 +71,21 @@ std::vector<char> getPerm2(const PMTree& tree, int num) {
   return {};
 }
 
-std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
-  std::vector<std::vector<char>> result;
+// функция для сбора перестановок из дерева (не используется в текущем коде)
+void collectPermutations(const std::_shared_ptr<Node>& node,
+                         std::_string& current,
+                         std::_vector<std::_string>& result) {
+  if (!node) return;
 
-  auto elems = tree.getElements();
+  current.push_back(node->value);
 
-  std::sort(elems.begin(), elems.end());
+  if (node->children.empty()) {
+    result.push_back(current);
+  } else {
+    for (const auto& child : node->children) {
+      collectPermutations(child, current, result);
+    }
+  }
 
-  do {
-    result.push_back(elems);
-  } while (std::next_permutation(elems.begin(), elems.end()));
-
-  return result;
-}
-  return result;
+  current.pop_back();
 }
