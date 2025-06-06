@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iostream>
 #include <random>
-#include <vector>
 
 #include "tree.h"
 
@@ -61,7 +60,7 @@ void runExperiment() {
 
     size_t total_perms = tree.getTotalPermutations();
 
-    if (total_perms == 0) continue;  // на случай пустого набора
+    if (total_perms == 0) continue;
 
     std::uniform_int_distribution<> distr(1, total_perms);
 
