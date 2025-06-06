@@ -7,9 +7,8 @@
 
 #include "tree.h"
 
-PMTree::PMTree(const std::vector<char>& elements) { create(elements); }
 
-std::vector<char> PMTree::getElements() const { return elements; }
+PMTree::PMTree(const std::vector<char>& elements) { create(elements); }
 
 void PMTree::create(const std::vector<char>& data) {
   root = std::make_shared<Node>('\0');
@@ -41,37 +40,8 @@ size_t PMTree::getTotalPermutations() const {
   return result;
 }
 
-std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
-  std::vector<std::vector<char>> result;
+std::vector<char> PMTree::getElements() const { return elements; }
 
-  auto elems = tree.getElements();
-
-  std::sort(elems.begin(), elems.end());
-
-  do {
-    result.push_back(elems);
-  } while (std::next_permutation(elems.begin(), elems.end()));
-
-  return result;
-}
-
-std::vector<char> getPerm1(const PMTree& tree, int num) {
-  auto perms = getAllPerms(tree);
-  if (num >= 0 && num < static_cast<int>(perms.size())) {
-    return perms[num];
-  }
-  return {};
-}
-
-std::vector<char> getPerm2(const PMTree& tree, int num) {
-  auto perms = getAllPerms(tree);
-  if (num >= 0 && num < static_cast<int>(perms.size())) {
-    return perms[num];
-  }
-  return {};
-}
-
-// функция для сбора перестановок из дерева (не используется в текущем коде)
 void collectPermutations(const std::_shared_ptr<Node>& node,
                          std::_string& current,
                          std::_vector<std::_string>& result) {
@@ -88,4 +58,34 @@ void collectPermutations(const std::_shared_ptr<Node>& node,
   }
 
   current.pop_back();
+}
+
+std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
+  std::vector<std::vector<char>> result;
+
+  auto elems = tree.getElements();
+
+  std::sort(elems.begin(), elems.end());
+
+  do {
+    result.push_back(elems);
+  } while (std::next_permutation(elems.begin(), elems.end()));
+
+  return result;
+}
+
+std::vector<char> getPerm1(const PMTree& tree, int num) {
+  auto perms = getAllPerms(tree);
+  if (num > 0 && num <= static_cast<int>(perms.size())) {
+    return perms[num - 1];
+  }
+  return {};
+}
+
+std::vector<char> getPerm2(const PMTree& tree, int num) {
+  auto perms = getAllPerms(tree);
+  if (num > 0 && num <= static_cast<int>(perms.size())) {
+    return perms[num - 1];
+  }
+  return {};
 }
